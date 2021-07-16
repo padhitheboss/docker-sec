@@ -217,14 +217,24 @@ correct_permissions(){
     chmod 0644 /etc/passwd #file_permissions_etc_passwd
     chown 0 /etc/group #file_owner_etc_group
 }
+
+partition_warning(){
+    echo "WARNING: Create Separate Partition for /var/log"
+    echo "WARNING:Create Separate Partition for /home"
+    echo "WARNING:Create Separate Partition for /var/log/audit"
+    echo "WARNING:Create Separate Partition for /var"
+    echo "WARNING:Create Separate Partition for /tmp"
+}
+
 echo "Enabling Audit and Logging for OS"
 setup_audit
 echo "WARNING:Private Key Authentication to SSH should be configured prior to running this otherwise you not SSH into the system"
 read -p "Are you sure? " -n 1 -r
 if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
-    echo "Executed"
+    echo "Configure passwordless SSH Authentication First"
 else
     securing_ssh
 fi
 correct_permissions
+partition_warning
