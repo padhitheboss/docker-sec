@@ -10,7 +10,7 @@ normal=$( tput sgr 0 );
 fix_part()
 {
     echo "For better security a separate partition for containers"
-    read -p "Do you have an extra empty which can be dedicated to docker " -n 1 -r
+    read -p "Do you have an extra empty disk which can be dedicated to docker(y/n) "
 if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
     echo "Create Partion Manually for Containers"
@@ -19,13 +19,15 @@ else
     read Disk
     systemctl stop docker
     mv /var/lib/docker /var/lib/docker-backup
-    mount $Disk /var/lib/docker
+    sudo mkfs.ext4 /dev/xvdf
+    echo $Disk" /var/lib/docker auto noatime 0 0" | sudo tee -a /etc/fstab
+    sudo mount /var/lib/docker
     if [ $? -eq 0 ]; then
         cp -rf /var/lib/docker-backup/* /var/lib/docker
         echo "Changed Parttion Successfully."
     else
-        echo"Unable to Mount Partiton"
-        echo"Reverting Changes"
+        echo "Unable to Mount Partiton"
+        echo "Reverting Changes"
         mv /var/lib/docker-backup /var/lib/docker
     fi
     systemctl start docker
@@ -138,14 +140,7 @@ fi
 
 if ! grep -q  "{" /etc/docker/daemon.json;
 then
-        echo "{
-            \"icc\": false
-            \"live-restore\": true
-            \"userland-proxy\": false
-            \"no-new-privileges\": true
-            \"userns-remap\":\"default\"
-            \"log-driver\":\"syslog\"
-        }" > /etc/docker/daemon.json
+        cp files/basic.txt /etc/docker/daemon.json
     else
         echo"Some Custom Configuration is Present Check Before Applying"
     fi
@@ -171,4 +166,5 @@ else
     docker_daemon_config
     enable_content_trust
 fi
+
 fix_part
