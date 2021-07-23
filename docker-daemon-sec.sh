@@ -10,7 +10,7 @@ normal=$( tput sgr 0 );
 fix_part()
 {
     echo "For better security a separate partition for containers"
-    read -p "Do you have an extra empty disk which can be dedicated to docker(y/n) "
+    read -p "Do you have an extra empty disk which can be dedicated to docker(y/n): " -n 1 -r
 if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
     echo "Create Partion Manually for Containers"
@@ -110,7 +110,7 @@ enable_auditing_docker()
     then
         echo "-w /usr/bin/dockerd -k docker" >> /etc/audit/rules.d/audit.rules
     fi
-    
+
     echo "
     ${green}auditd set.${normal}"
     
@@ -164,7 +164,7 @@ if ! grep -q  "{" /etc/docker/daemon.json;
 then
         cp files/basic.txt /etc/docker/daemon.json
     else
-        echo"Some Custom Configuration is Present Check Before Applying"
+        echo "Some Custom Configuration is Present Check Before Applying"
     fi
 
     
@@ -178,6 +178,7 @@ then
     echo "
     ${green}Docker service restarted.${normal}"
 }
+fix_part
 
 read -p "Do you want to enable docker Auditing and logging(y/n)" -n 1 -r
 if [[ ! $REPLY =~ ^[Yy]$ ]]
