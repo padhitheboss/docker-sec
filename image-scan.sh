@@ -8,15 +8,15 @@ install_trivy(){
     chmod +x trivy_0.19.1_Linux-64bit.deb
     dpkg -i trivy_0.19.1_Linux-64bit.deb
 }
-
+install_trivy
 scan_image(){
     echo "Specify the image name you want to scan:"
-    echo name
+    read name
     trivy image $name
 }
 
 scan_config(){
-    echo"Enter Path of folder containing dockerfile or directory conatining IaC:"
+    echo "Enter Path of folder containing dockerfile or directory conatining IaC:"
     read loc
     trivy config $loc
 }
@@ -26,9 +26,9 @@ main_menu(){
     echo "Scanner For Images And Config Files"
     echo " "
     echo "Choose a option from below:"
-         echo 1. Scan a Image
-         echo 2. Scan a Config File
-         echo 3. Exit
+         echo "1. Scan a Image"
+         echo "2. Scan a Config File"
+         echo "3. Exit Image Scanner"
     echo " "
     echo -n "Enter Option No.:"
     read option
@@ -41,12 +41,11 @@ main_menu(){
     read -n 1 -p "<Enter> for main menu"
         main_menu
         ;;
-    5)
+    3)
 		function goout () {
 			TIME=2
 			echo " "
-			echo Exiting Scanner ......
-			sleep $TIME
+			echo Exiting Image Scanner .....
 			exit 0
 		}
 		goout

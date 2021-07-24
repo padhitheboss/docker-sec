@@ -1,3 +1,5 @@
+#!/bin/bash
+banner(){
 echo ""
 echo "|  _ \  ___   ___| | _____ _ __   / ___|  ___  ___ _   _ _ __(_) |_ _   _   "
 echo "| | | |/ _ \ / __| |/ / _ \ '__|  \___ \ / _ \/ __| | | | '__| | __| | | |  "
@@ -6,6 +8,8 @@ echo "|____/ \___/ \___|_|\_\___|_|     |____/ \___|\___|\__,_|_|  |_|\__|\__, |
 echo "                                                                    |___/   "
 echo ""
 echo ""
+}
+banner
 if [[ $EUID -ne 0 ]]; then
     echo "You must be root"
     exit 1
@@ -13,22 +17,30 @@ fi
 pwd=$(pwd)
 function mainmenu(){
     clear
+    banner
     echo " "
     echo " "
     echo "Choose a option from below:"
+         echo " "
          echo "1. Docker CIS Benchmark"
+         echo " "
          echo "2. Host OS Hardening"
+         echo " "
          echo "3. Docker Daemon Security Hardening"
+         echo " "
          echo "4. Docker TLS Remote Access Configuration"
+         echo " "
          echo "5. Image Scanning"
-         echo "6. Run All" 
+         echo " "
+         echo "6. Kernel Capabilities Templates"
+         echo " "
          echo "7. Exit"
     echo " "
     echo -n "Enter Option No.:"
     read option
     case $option in
 	1)
-	=git clone https://github.com/docker/docker-bench-security.git
+	git clone https://github.com/docker/docker-bench-security.git
         cd docker-bench-security && sudo ./docker-bench-security.sh
         read -n 1 -p "<Enter> for main menu"
         mainmenu
@@ -69,7 +81,12 @@ function mainmenu(){
             read -n 1 -p "<Enter> for main menu"
 		    mainmenu
         ;;
-    6)
+       6)   sudo apt install python3
+            python docker-cap.py
+           read -n 1 -p "<Enter> for main menu"
+                    mainmenu
+        ;;
+    7)
 		function goout () {
 			TIME=2
 			echo " "
