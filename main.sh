@@ -77,7 +77,7 @@ function mainmenu(){
         mkdir -p /etc/systemd/system/docker.service.d/
         cat files/override.txt >> /etc/systemd/system/docker.service.d/override.conf
         sudo systemctl daemon-reload
-        sudo systemctl docker restart
+        sudo systemctl restart docker
 			read -n 1 -p "<Enter> for main menu"
 			mainmenu
 	;;

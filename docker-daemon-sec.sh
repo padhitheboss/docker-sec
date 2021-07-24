@@ -19,7 +19,7 @@ else
     read Disk
     systemctl stop docker
     mv /var/lib/docker /var/lib/docker-backup
-    sudo mkfs.ext4 /dev/xvdf
+    sudo mkfs.ext4 $Disk
     echo $Disk" /var/lib/docker auto noatime 0 0" | sudo tee -a /etc/fstab
     sudo mount /var/lib/docker
     if [ $? -eq 0 ]; then
