@@ -92,7 +92,7 @@ function mainmenu(){
 		    mainmenu
         ;;
     7)   sudo apt install python3
-        python docker-cap.py
+        python3 cap_template.py
            read -n 1 -p "<Enter> for main menu"
                     mainmenu
         ;;
