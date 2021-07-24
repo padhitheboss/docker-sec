@@ -21,7 +21,7 @@ else
     mv /var/lib/docker /var/lib/docker-backup
     sudo mkfs.ext4 $Disk
     echo $Disk" /var/lib/docker auto noatime 0 0" | sudo tee -a /etc/fstab
-    sudo mount /var/lib/docker
+    sudo mount $Disk /var/lib/docker
     if [ $? -eq 0 ]; then
         cp -rf /var/lib/docker-backup/* /var/lib/docker
         echo "Changed Parttion Successfully."
