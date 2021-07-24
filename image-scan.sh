@@ -12,13 +12,15 @@ install_trivy
 scan_image(){
     echo "Specify the image name you want to scan:"
     read name
-    trivy image $name
+    trivy image $name > logs/$name.txt
+    cat logs/$name.txt
 }
 
 scan_config(){
     echo "Enter Path of folder containing dockerfile or directory conatining IaC:"
     read loc
-    trivy config $loc
+    trivy config $loc > logs/$loc.txt
+    cat logs/$loc.txt
 }
 main_menu(){
     clear
