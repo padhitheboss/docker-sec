@@ -22,45 +22,52 @@ function mainmenu(){
     echo " "
     echo "Choose a option from below:"
          echo " "
-         echo "1. Docker CIS Benchmark"
+         echo "1. Install Docker"
          echo " "
-         echo "2. Host OS Hardening"
+         echo "2. Docker CIS Benchmark"
          echo " "
-         echo "3. Docker Daemon Security Hardening"
+         echo "3. Host OS Hardening"
          echo " "
-         echo "4. Docker TLS Remote Access Configuration"
+         echo "4. Docker Daemon Security Hardening"
          echo " "
-         echo "5. Image Scanning"
+         echo "5. Docker TLS Remote Access Configuration"
          echo " "
-         echo "6. Kernel Capabilities Templates"
+         echo "6. Image Scanning"
          echo " "
-         echo "7. Exit"
+         echo "7. Kernel Capabilities Templates"
+         echo " "
+         echo "8. Exit"
     echo " "
     echo -n "Enter Option No.:"
     read option
     case $option in
-	1)
+    1)  curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh
+        read -n 1 -p "<Enter> for main menu"
+        mainmenu
+        ;;
+
+	2)
 	git clone https://github.com/docker/docker-bench-security.git
         cd docker-bench-security && sudo ./docker-bench-security.sh
         read -n 1 -p "<Enter> for main menu"
         mainmenu
         ;;
 
-    2)
+    3)
         cd $pwd
         sudo ./os-sec.sh
 			read -n 1 -p "<Enter> for main menu"
 			mainmenu
 	;;
 
-	3)
+	4)
                 cd $pwd
 		sudo ./docker-daemon-sec.sh
 			read -n 1 -p "<Enter> for main menu"
 			mainmenu
 	;;
 
-	4)
+	5)
         cd $pwd
 	sudo ./gen_tls_cert.sh
         mkdir -p /etc/docker/tls
@@ -75,18 +82,18 @@ function mainmenu(){
 			mainmenu
 	;;
 
-	5)
+	6)
         cd $pwd
         sudo ./image-scan.sh
             read -n 1 -p "<Enter> for main menu"
 		    mainmenu
         ;;
-       6)   sudo apt install python3
-            python docker-cap.py
+    7)   sudo apt install python3
+        python docker-cap.py
            read -n 1 -p "<Enter> for main menu"
                     mainmenu
         ;;
-    7)
+    8)
 		function goout () {
 			TIME=2
 			echo " "
