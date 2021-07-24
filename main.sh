@@ -42,6 +42,9 @@ function mainmenu(){
     read option
     case $option in
     1)  curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh
+        clear
+        echo "Run "dockerd-rootless-setuptool.sh install" as a user to run docker as non-root user "
+        sleep 3
         read -n 1 -p "<Enter> for main menu"
         mainmenu
         ;;
