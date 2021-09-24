@@ -26,17 +26,13 @@ function mainmenu(){
          echo " "
          echo "2. Docker CIS Benchmark"
          echo " "
-         echo "3. Host OS Hardening"
+         echo "3. Host OS Hardening & Docker Daemon Security Hardening"
          echo " "
-         echo "4. Docker Daemon Security Hardening"
+         echo "4. Docker TLS Remote Access Configuration"
          echo " "
-         echo "5. Docker TLS Remote Access Configuration"
+         echo "5. Image Web Utility"
          echo " "
-         echo "6. Image Scanning"
-         echo " "
-         echo "7. Kernel Capabilities Templates"
-         echo " "
-         echo "8. Exit"
+         echo "6. Exit"
     echo " "
     echo -n "Enter Option No.:"
     read option
@@ -59,18 +55,13 @@ function mainmenu(){
     3)
         cd $pwd
         sudo ./os-sec.sh
-			read -n 1 -p "<Enter> for main menu"
-			mainmenu
-	;;
-
-	4)
-                cd $pwd
+        cd $pwd
 		sudo ./docker-daemon-sec.sh
 			read -n 1 -p "<Enter> for main menu"
 			mainmenu
 	;;
 
-	5)
+	4)
         cd $pwd
 	sudo ./gen_tls_cert.sh
         mkdir -p /etc/docker/tls
@@ -85,18 +76,25 @@ function mainmenu(){
 			mainmenu
 	;;
 
-	6)
+	5)
         cd $pwd
-        sudo ./image-scan.sh
+            install_trivy(){
+                echo "Installing Trivy"
+                wget https://github.com/aquasecurity/trivy/releases/download/v0.19.1/trivy_0.19.1_Linux-64bit.deb
+                chmod +x trivy_0.19.1_Linux-64bit.deb
+                dpkg -i trivy_0.19.1_Linux-64bit.deb
+            }
+            install_trivy
+            install_dependency(){
+                echo "Installing dependencies"
+                sudo apt install -y python3 pip
+                sudo apt install -y nodejs npm
+            }
             read -n 1 -p "<Enter> for main menu"
 		    mainmenu
         ;;
-    7)   sudo apt install python3
-        python3 cap_template.py
-           read -n 1 -p "<Enter> for main menu"
-                    mainmenu
-        ;;
-    8)
+
+    6)
 		function goout () {
 			TIME=2
 			echo " "
