@@ -90,6 +90,21 @@ function mainmenu(){
                 sudo apt install -y python3 pip
                 sudo apt install -y nodejs npm
             }
+            install_dependency
+            run_backend(){
+                echo "Starting Backend"
+                cd Backend
+                pip install -r requirement.txt
+                python manage.py runserver 5000> /dev/null 2>&1 &
+                cd $pwd
+            }
+            run_frontend(){
+                echo "Starting Frontend"
+                cd Frontend/ui
+                npm install
+                npm start > /dev/null 2>&1 &
+                cd $pwd
+            }
             read -n 1 -p "<Enter> for main menu"
 		    mainmenu
         ;;
