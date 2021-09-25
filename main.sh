@@ -96,11 +96,11 @@ function mainmenu(){
                 cd Backend
                 pip install -r requirement.txt
                 python manage.py runserver 5000> /dev/null 2>&1 &
-                cd $pwd
+                
             }
             run_frontend(){
                 echo "Starting Frontend"
-                cd Frontend/ui
+                cd ui
                 npm install
                 npm start > /dev/null 2>&1 &
                 cd $pwd
